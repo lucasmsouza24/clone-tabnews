@@ -15,7 +15,6 @@ async function status(request, response) {
     values: [databaseName]
   })
 
-  console.log(openedConnectionsResult.rows)
   const openedConnectionsValue = parseInt(openedConnectionsResult.rows[0].opened_connections)
 
   response.status(200).json({
