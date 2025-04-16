@@ -8,21 +8,24 @@ function Contagem() {
   const [timeLeft, setTimeLeft] = useState('');
   const [specialMessage, setSpecialMessage] = useState('');
   const [relationshipDuration, setRelationshipDuration] = useState('');
+  const [now, setNow] = useState(new Date());
   
   useEffect(() => {
-    const now = new Date();
+    setNow(new Date());
     const day = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
 
+    const love_day = 16
+
     // next 16th
-    let next16 = new Date(year, month, 16);
-    if (day > 16) {
-      next16 = new Date(year, month + 1, 16);
+    let next16 = new Date(year, month, love_day);
+    if (day >= love_day) {
+      next16 = new Date(year, month + 1, love_day);
     }
 
     // if today is 16th
-    if (day == 16) {
+    if (day == love_day) {
       setSpecialMessage('🎉 Hoje é o nosso dia! ❤️');
     }
 
@@ -38,7 +41,7 @@ function Contagem() {
     // Relationship duration
     const years = year - startDate.getFullYear();
     let months = month - startDate.getMonth();
-    if (day < 16) months -= 1;
+    if (day < love_day) months -= 1;
     if (months < 0) {
       months += 12;
     }
@@ -47,6 +50,7 @@ function Contagem() {
 
     // Update countdown every second
     const interval = setInterval(() => {
+      setNow(new Date());
       const updatedNow = new Date();
       const updatedDiff = next16.getTime() - updatedNow.getTime();
       const days = Math.floor(updatedDiff / (1000 * 60 * 60 * 24));
@@ -59,7 +63,7 @@ function Contagem() {
 
     return () => clearInterval(interval);
 
-  }, []);
+  }, [now]);
 
   return (
     <>
